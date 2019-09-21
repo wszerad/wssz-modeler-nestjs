@@ -1,17 +1,18 @@
 import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import { ModelerJsonSchema } from '@wssz/modeler-jsonschema';
 import { ModelerParser, ModelerParserOptions } from '@wssz/modeler-parser';
-import * as Ajv from 'ajv';
+import * as ajv from 'ajv';
+const Ajv = require('ajv');
 
 @Injectable()
 export class ModelerPipe implements PipeTransform {
-	private ajvInstance: Ajv.Ajv;
+	private ajvInstance: ajv.Ajv;
 	private registered = new Set<string>();
 
 	constructor(
-		private errorHandler?: (errors: Ajv.ErrorObject[]) => any,
+		private errorHandler?: (errors: ajv.ErrorObject[]) => any,
 		private parserOptions: ModelerParserOptions = {},
-		private ajvOptions: Ajv.Options = {
+		private ajvOptions: ajv.Options = {
 			nullable: true,
 			removeAdditional: true,
 			allErrors: true,
@@ -28,7 +29,7 @@ export class ModelerPipe implements PipeTransform {
 		if (this.ajvOptions) {
 			this.manageSchemas(metadata.metatype);
 
-			if(!this.ajvInstance.validate(metadata.metatype.name, value)) {
+			if(!this.ajvInstance.validate(`#/definitions/${metadata.metatype.name}`, value)) {
 				if (!this.errorHandler) {
 					throw new BadRequestException('Validation failed');
 				}
@@ -53,7 +54,7 @@ export class ModelerPipe implements PipeTransform {
 				.forEach(dep => this.manageSchemas(dep));
 
 			this.registered.add(model.name);
-			this.ajvInstance.addSchema(modelerSchema.getSchema(), model.name);
+			this.ajvInstance.addSchema(modelerSchema.getSchema(), `#/definitions/${model.name}`);
 		}
 	}
 }

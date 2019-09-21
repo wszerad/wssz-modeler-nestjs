@@ -49,7 +49,7 @@ describe('tests', () => {
 					'params': {
 						'format': 'date'
 					},
-					'schemaPath': 'OtherClass/properties/pDate/format'
+					'schemaPath': '#/definitions/OtherClass/properties/pDate/format'
 				}
 			]);
 		});
