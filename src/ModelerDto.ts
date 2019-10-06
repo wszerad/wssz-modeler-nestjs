@@ -1,12 +1,7 @@
-import { ApiModelProperty } from '@nestjs/swagger';
-import { ModelerJsonSchema } from '@wssz/modeler-jsonschema';
+export const modelerDtos = new Map<string, Function>();
 
 export function ModelerDto() {
 	return (constructor: Function) => {
-		const model = ModelerJsonSchema.create(constructor);
-		Object.entries(model.getSchema().properties)
-			.forEach(([key, propSchema]) => {
-				ApiModelProperty(propSchema)(constructor.prototype, key);
-			});
+		modelerDtos.set(constructor.name, constructor);
 	}
 }
