@@ -28,7 +28,7 @@ export class ModelerNestjs {
 function resolveDependencies(definitions: Map<string, object>, schemaName: string, model?: Function) {
 	const dtos = model || modelerDtos.get(schemaName);
 	if (dtos && !definitions.has(schemaName) && hasMarkers(dtos)) {
-		const modelerSchema = ModelerJsonSchema.create(dtos);
+		const modelerSchema = ModelerJsonSchema.create(dtos, {useNullable: true});
 		definitions.set(schemaName, modelerSchema.getSchema());
 
 		modelerSchema
