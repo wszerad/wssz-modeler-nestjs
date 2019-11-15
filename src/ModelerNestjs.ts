@@ -1,4 +1,5 @@
 import { SwaggerDocument } from '@nestjs/swagger';
+import { hasMarkers } from '@wssz/modeler';
 import { modelerDtos } from './ModelerDto';
 import { ModelerJsonSchema } from '@wssz/modeler-jsonschema';
 
@@ -25,8 +26,9 @@ export class ModelerNestjs {
 }
 
 function resolveDependencies(definitions: Map<string, object>, schemaName: string, model?: Function) {
-	if ((model || modelerDtos.has(schemaName)) && !definitions.has(schemaName)) {
-		const modelerSchema = ModelerJsonSchema.create(model || modelerDtos.get(schemaName));
+	const dtos = model || modelerDtos.get(schemaName);
+	if (dtos && !definitions.has(schemaName) && hasMarkers(dtos)) {
+		const modelerSchema = ModelerJsonSchema.create(dtos);
 		definitions.set(schemaName, modelerSchema.getSchema());
 
 		modelerSchema
