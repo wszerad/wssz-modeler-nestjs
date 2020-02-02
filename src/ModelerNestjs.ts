@@ -1,14 +1,14 @@
-import { SwaggerDocument } from '@nestjs/swagger';
+import { OpenAPIObject } from '@nestjs/swagger';
 import { hasMarkers } from '@wssz/modeler';
 import { modelerDtos } from './ModelerDto';
 import { ModelerJsonSchema } from '@wssz/modeler-jsonschema';
 
 export class ModelerNestjs {
-	static extend(document: SwaggerDocument): SwaggerDocument  {
-		if (document.definitions) {
+	static extend(document: OpenAPIObject): OpenAPIObject  {
+		if (document.components && document.components.schemas) {
 			const definitions = new Map<string, object>();
 
-			Object.keys(document.definitions).forEach(model => {
+			Object.keys(document.components.schemas).forEach(model => {
 				resolveDependencies(definitions, model);
 			});
 
@@ -18,7 +18,7 @@ export class ModelerNestjs {
 					return Object.assign(definitions, {
 						[key]: schema
 					});
-				}, document.definitions);
+				}, document.components.schemas);
 		}
 
 		return document;

@@ -1,7 +1,12 @@
+import { Body, Controller, Module, Post } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { ApiProperty, DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Description, Enum, Example, Format, Formats, Nullable, Pattern, Prop, Required } from '@wssz/modeler';
+import { expect } from 'chai';
 import 'mocha';
 import 'reflect-metadata';
-import { expect } from 'chai';
-import { Prop, Nullable } from '@wssz/modeler';
+import { ModelerDto } from '../src/ModelerDto';
+import { ModelerNestjs } from '../src/ModelerNestjs';
 import { ModelerPipe } from '../src/ModelerPipe';
 
 class OtherClass {
@@ -9,7 +14,51 @@ class OtherClass {
 	pDate: Date;
 }
 
+@ModelerDto()
+export class RequestModel {
+	@Enum(['ww@ww.com', 'ww2@ww2.com']) @Format(Formats.Email)
+	@Example('ww@ww.com') @Nullable() @Description('Some description')
+	@Pattern(/.+/)
+	@Prop() email: string;
+
+	@ApiProperty({
+		enum: ['ww@ww.com', 'ww2@ww2.com'], format: Formats.Email,
+		example: 'ww@ww.com', nullable: true, description: 'Some description',
+		pattern: '/.+/', type: 'string'
+	})
+	email2: string
+}
+
+@Controller('controller')
+export class AppController {
+	@Post('request')
+	request(@Body() body: RequestModel) {}
+}
+
+@Module({
+	imports: [],
+	controllers: [AppController],
+	providers: []
+})
+class AppModule {}
+
 describe('tests', () => {
+	describe('ModelerNestjs', () => {
+		it('compare default output', async () => {
+			const app = await NestFactory.create(AppModule);
+			const options = new DocumentBuilder()
+				.setTitle('Api').setVersion('1.0').addTag('tag').build();
+
+			const def = SwaggerModule.createDocument(app, options);
+			const document = ModelerNestjs.extend(JSON.parse(JSON.stringify(def)));
+
+			// @ts-ignore
+			expect(def.components.schemas.RequestModel.properties.email2)
+				// @ts-ignore
+				.to.eql(document.components.schemas.RequestModel.properties.email)
+		});
+	});
+
 	describe('ModelerPipe', () => {
 		const validationPipe = new ModelerPipe(errors => errors, null);
 		const parserPipe = new ModelerPipe(errors => errors, {}, null);
