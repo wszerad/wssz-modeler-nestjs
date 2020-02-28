@@ -20,7 +20,7 @@
 		"@nestjs/core": "^6.11.6",
 		"@nestjs/common": "^6.11.8",
 		"@nestjs/platform-express": "^6.11.6",
-		"@nestjs/swagger": "^4.2.7"
+		"@nestjs/swagger": "^4.3.1"
 	},
 	"dependencies": {
 		"reflect-metadata": "^0.1.13",
@@ -28,7 +28,7 @@
 		"@wssz/modeler": "^0.3.9",
 		"@wssz/modeler-parser": "^0.3.5",
 		"@wssz/modeler-jsonschema": "^0.3.5",
-		"ajv": "^6.11.0",
+		"ajv": "^6.12.0",
 		"rxjs": "^6.5.4"
 	},
 	"peerDependencies": {
