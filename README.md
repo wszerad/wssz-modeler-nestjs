@@ -2,20 +2,15 @@
 Plugin for [@wssz/modeler](https://github.com/wszerad/wssz-modeler) and [NestJS](https://github.com/nestjs/nest), introduce support for @nestjs/swagger and ModelerPipe with validation and object casting.
 
 ## Usage
+```typescript
 
-* @ModelerDto()
-    *  implements Modeler decorators to work with Swagger docs
-
-```ts
-
-@ModelerDto()
 class AnyDto {
-    @Prop() id: string,
+    @Prop() id: string;
 
-    @Prop() date: Date,
+    @Prop() date: Date;
 
     @Nullable()
-    @Prop() otherDto: OtherDto
+    @Prop() otherDto: OtherDto;
 }
 
 ```
@@ -25,8 +20,14 @@ class AnyDto {
     * modelerParserOptions = null - to disable parser
     * [ajvOptions](https://github.com/epoberezkin/ajv#options) = null - to disable ajv based validation 
 
-```ts
+```typescript
 @Post()
 @UsePipes(new ModelerPipe())
 async create(@Body() anyDto: AnyDto) { ... }
+```
+## Extend Swagger models
+```typescript
+// inside nestjs bootstrap
+const document = ModelerNestjs.extend(SwaggerModule.createDocument(app, options));
+SwaggerModule.setup('docs', app, document);
 ```

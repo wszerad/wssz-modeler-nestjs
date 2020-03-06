@@ -1,6 +1,5 @@
 import { OpenAPIObject } from '@nestjs/swagger';
 import { hasMarkers } from '@wssz/modeler';
-import { modelerDtos } from './ModelerDto';
 import { ModelerJsonSchema } from '@wssz/modeler-jsonschema';
 
 export class ModelerNestjs {
@@ -26,9 +25,8 @@ export class ModelerNestjs {
 }
 
 function resolveDependencies(definitions: Map<string, object>, schemaName: string, model?: Function) {
-	const dtos = model || modelerDtos.get(schemaName);
-	if (dtos && !definitions.has(schemaName) && hasMarkers(dtos)) {
-		const modelerSchema = ModelerJsonSchema.create(dtos, {useNullable: true});
+	if (!definitions.has(schemaName) && hasMarkers(schemaName)) {
+		const modelerSchema = ModelerJsonSchema.create(schemaName, {useNullable: true});
 		definitions.set(schemaName, modelerSchema.getSchema());
 
 		modelerSchema

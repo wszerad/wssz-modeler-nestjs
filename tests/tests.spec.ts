@@ -1,11 +1,10 @@
 import { Body, Controller, Module, Post } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ApiProperty, DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Description, Enum, Example, Format, Formats, Nullable, Pattern, Prop, Required } from '@wssz/modeler';
+import { Description, Enum, Example, Format, Formats, Nullable, Pattern, Prop } from '@wssz/modeler';
 import { expect } from 'chai';
 import 'mocha';
 import 'reflect-metadata';
-import { ModelerDto } from '../src/ModelerDto';
 import { ModelerNestjs } from '../src/ModelerNestjs';
 import { ModelerPipe } from '../src/ModelerPipe';
 
@@ -14,7 +13,6 @@ class OtherClass {
 	pDate: Date;
 }
 
-@ModelerDto()
 export class RequestModel {
 	@Enum(['ww@ww.com', 'ww2@ww2.com']) @Format(Formats.Email)
 	@Example('ww@ww.com') @Nullable() @Description('Some description')

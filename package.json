@@ -2,7 +2,7 @@
 	"name": "@wssz/modeler-nestjs",
 	"author": "wszerad91@gmail.com",
 	"license": "MIT",
-	"version": "0.3.6",
+	"version": "0.5.1",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
@@ -10,31 +10,31 @@
 		"test": "mocha --require ts-node/register ./tests/*"
 	},
 	"devDependencies": {
-		"@types/chai": "^4.2.9",
-		"@types/mocha": "^7.0.1",
-		"@types/node": "13.7.6",
+		"@types/chai": "^4.2.10",
+		"@types/mocha": "^7.0.2",
+		"@types/node": "13.7.7",
 		"@types/reflect-metadata": "^0.1.0",
 		"chai": "^4.2.0",
 		"mocha": "^7.1.0",
 		"ts-node": "^8.6.2",
-		"@nestjs/core": "^6.11.8",
-		"@nestjs/platform-express": "^6.11.8",
-		"@nestjs/common": "^6.11.8",
-		"@nestjs/swagger": "^4.3.1"
+		"@nestjs/core": "^6.11.11",
+		"@nestjs/platform-express": "^6.11.11",
+		"@nestjs/common": "^6.11.11",
+		"@nestjs/swagger": "^4.3.2"
 	},
 	"dependencies": {
 		"reflect-metadata": "^0.1.13",
-		"typescript": "^3.8.2",
-		"@wssz/modeler": "^0.3.9",
-		"@wssz/modeler-parser": "^0.3.5",
-		"@wssz/modeler-jsonschema": "^0.3.5",
+		"typescript": "^3.8.3",
+		"@wssz/modeler": "^0.5.1",
+		"@wssz/modeler-parser": "^0.5.1",
+		"@wssz/modeler-jsonschema": "^0.5.1",
 		"ajv": "^6.12.0",
 		"rxjs": "^6.5.4"
 	},
 	"peerDependencies": {
-		"@nestjs/core": "^6.7.2",
-		"@nestjs/common": "^6.7.2",
-		"@nestjs/swagger": "^3.1.0"
+		"@nestjs/core": "^6.11.11",
+		"@nestjs/common": "^6.11.11",
+		"@nestjs/swagger": "^4.3.2"
 	},
 	"repository": {
 		"type": "git",
