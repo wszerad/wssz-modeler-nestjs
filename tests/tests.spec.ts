@@ -22,7 +22,7 @@ export class RequestModel {
 	@ApiProperty({
 		enum: ['ww@ww.com', 'ww2@ww2.com'], format: Formats.Email,
 		example: 'ww@ww.com', nullable: true, description: 'Some description',
-		pattern: '/.+/', type: 'string'
+		pattern: '.+', type: 'string'
 	})
 	email2: string
 }

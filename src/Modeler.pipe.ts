@@ -2,9 +2,8 @@ import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from
 import { hasMarkers } from '@wssz/modeler';
 import { ModelerJsonSchema } from '@wssz/modeler-jsonschema';
 import { ModelerParser, ModelerParserOptions } from '@wssz/modeler-parser';
-import * as ajv from 'ajv';
+import Ajv, * as ajv from 'ajv';
 import { basicTypesTransform, TypeTransform } from './basic-types-transform';
-const Ajv = require('ajv');
 
 interface ModelerPipeError {
 	metatype: string;
