@@ -2,7 +2,7 @@
 	"name": "@wssz/modeler-nestjs",
 	"author": "wszerad91@gmail.com",
 	"license": "MIT",
-	"version": "0.5.2",
+	"version": "0.6.0",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {

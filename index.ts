@@ -1,2 +1,2 @@
-export { ModelerPipe } from './src/ModelerPipe';
+export { ModelerPipe } from 'src/Modeler.pipe';
 export { ModelerNestjs } from './src/ModelerNestjs';

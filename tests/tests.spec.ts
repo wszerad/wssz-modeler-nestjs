@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import 'mocha';
 import 'reflect-metadata';
 import { ModelerNestjs } from '../src/ModelerNestjs';
-import { ModelerPipe } from '../src/ModelerPipe';
+import { ModelerPipe } from '../src/Modeler.pipe';
 
 class OtherClass {
 	@Prop()
@@ -58,8 +58,53 @@ describe('tests', () => {
 	});
 
 	describe('ModelerPipe', () => {
-		const validationPipe = new ModelerPipe(errors => errors, null);
-		const parserPipe = new ModelerPipe(errors => errors, {}, null);
+		const validationPipe = new ModelerPipe(errors => errors, [],null);
+		const parserPipe = new ModelerPipe(errors => errors, [],{}, null);
+
+		it('should pass String', () => {
+			expect(
+				validationPipe.transform(false, {metatype: String, type: 'body', data: null})
+			).to.eql('false');
+			expect(
+				validationPipe.transform(123, {metatype: String, type: 'body', data: null})
+			).to.eql('123');
+			expect(
+				validationPipe.transform('123', {metatype: String, type: 'body', data: null})
+			).to.eql('123');
+		});
+
+		it('should pass Number', () => {
+			expect(
+				validationPipe.transform('123', {metatype: Number, type: 'body', data: null})
+			).to.eql(123);
+			expect(
+				validationPipe.transform(123, {metatype: Number, type: 'body', data: null})
+			).to.eql(123);
+			expect(
+				validationPipe.transform(false, {metatype: Number, type: 'body', data: null})
+			).to.eql(0);
+		});
+
+		it('should pass Boolean', () => {
+			expect(
+				validationPipe.transform('0', {metatype: Boolean, type: 'body', data: null})
+			).to.eql(false);
+			expect(
+				validationPipe.transform('false', {metatype: Boolean, type: 'body', data: null})
+			).to.eql(false);
+			expect(
+				validationPipe.transform(false, {metatype: Boolean, type: 'body', data: null})
+			).to.eql(false);
+		});
+
+		it('should pass Date', () => {
+			expect(
+				validationPipe.transform('0', {metatype: Date, type: 'body', data: null})
+			).to.eql(new Date(0));
+			expect(
+				validationPipe.transform(0, {metatype: Date, type: 'body', data: null})
+			).to.eql(new Date(0));
+		});
 
 		it('should return error', () => {
 			class InvalidType {
@@ -69,15 +114,21 @@ describe('tests', () => {
 
 			expect(
 				validationPipe.transform({ pNumber: 'string'}, {metatype: InvalidType, type: 'body', data: null})
-			).to.eql([{
-				'dataPath': '.pNumber',
-				'keyword': 'type',
-				'message': 'should be number',
-				'params': {
-					'type': 'number'
-				},
-				'schemaPath': '#/properties/pNumber/type'
-			}]);
+			).to.eql({
+				'ajvErrors': [
+					{
+						'dataPath': '.pNumber',
+						'keyword': 'type',
+						'message': 'should be number',
+						'params': {
+							'type': 'number'
+						},
+						'schemaPath': '#/properties/pNumber/type'
+					}
+				],
+				'message': '.pNumber should be number',
+				'metatype': 'InvalidType'
+			});
 		});
 
 		it('should return error for nest object', () => {
@@ -88,17 +139,21 @@ describe('tests', () => {
 
 			expect(
 				validationPipe.transform({ pOther: { pDate: 'string'}}, {metatype: InvalidNestedType, type: 'body', data: null})
-			).to.eql([
-				{
-					'dataPath': '.pOther.pDate',
-					'keyword': 'format',
-					'message': 'should match format "date"',
-					'params': {
-						'format': 'date'
-					},
-					'schemaPath': '#/definitions/OtherClass/properties/pDate/format'
-				}
-			]);
+			).to.eql({
+				'ajvErrors': [
+					{
+						'dataPath': '.pOther.pDate',
+						'keyword': 'format',
+						'message': 'should match format "date"',
+						'params': {
+							'format': 'date',
+						},
+						'schemaPath': '#/definitions/OtherClass/properties/pDate/format',
+					}
+				],
+				'message': '.pOther.pDate should match format "date"',
+				'metatype': 'InvalidNestedType'
+			});
 		});
 
 		it('should pass nullable', () => {
