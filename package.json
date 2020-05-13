@@ -17,7 +17,7 @@
 		"chai": "^4.2.0",
 		"mocha": "^7.1.2",
 		"ts-node": "^8.9.1",
-		"@nestjs/core": "^7.0.9",
+		"@nestjs/core": "^7.0.11",
 		"@nestjs/platform-express": "^7.0.9",
 		"@nestjs/common": "^7.0.9",
 		"@nestjs/swagger": "^4.5.3"
@@ -32,7 +32,7 @@
 		"rxjs": "^6.5.5"
 	},
 	"peerDependencies": {
-		"@nestjs/core": "^7.0.9",
+		"@nestjs/core": "^7.0.11",
 		"@nestjs/common": "^7.0.9",
 		"@nestjs/swagger": "^4.5.3"
 	},
