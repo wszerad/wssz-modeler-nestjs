@@ -24,7 +24,7 @@
 	},
 	"dependencies": {
 		"reflect-metadata": "^0.1.13",
-		"typescript": "^3.8.3",
+		"typescript": "^3.9.2",
 		"@wssz/modeler": "^0.5.3",
 		"@wssz/modeler-parser": "^0.5.3",
 		"@wssz/modeler-jsonschema": "^0.5.5",
