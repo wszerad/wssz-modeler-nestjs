@@ -19,7 +19,7 @@
 		"ts-node": "^9.1.1",
 		"@nestjs/core": "^7.6.10",
 		"@nestjs/platform-express": "^7.6.9",
-		"@nestjs/common": "^7.6.8",
+		"@nestjs/common": "^7.6.11",
 		"@nestjs/swagger": "^4.7.12"
 	},
 	"dependencies": {
@@ -33,7 +33,7 @@
 	},
 	"peerDependencies": {
 		"@nestjs/core": "^7.6.10",
-		"@nestjs/common": "^7.6.8",
+		"@nestjs/common": "^7.6.11",
 		"@nestjs/swagger": "^4.7.12"
 	},
 	"repository": {
