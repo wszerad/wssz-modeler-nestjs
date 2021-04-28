@@ -28,7 +28,7 @@
 		"@wssz/modeler": "^0.5.4",
 		"@wssz/modeler-parser": "^0.5.4",
 		"@wssz/modeler-jsonschema": "^0.5.7",
-		"ajv": "^6.12.6",
+		"ajv": "^8.2.0",
 		"rxjs": "^6.5.5"
 	},
 	"peerDependencies": {
